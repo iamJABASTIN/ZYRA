@@ -5,6 +5,7 @@ import {
   HiOutlineShoppingBag,
   HiBars3BottomRight,
 } from "react-icons/hi2";
+import CartDrawer from "../Layout/CartDrawer";
 
 const Navbar = () => {
   return (
@@ -64,6 +65,7 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
+      <CartDrawer/>
     </>
   );
 };
