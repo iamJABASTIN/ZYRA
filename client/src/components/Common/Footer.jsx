@@ -1,4 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import { TbBrandMeta } from "react-icons/tb";
+import { IoLogoInstagram } from "react-icons/io";
+import { RiTwitterXLine } from "react-icons/ri";
+import { FiPhoneCall } from "react-icons/fi";
 
 const Footer = () => {
   return (
@@ -10,12 +16,143 @@ const Footer = () => {
             Be the first to hear about new products, exclusive events, and
             online offers.
           </p>
-          <p>Sign up and get 10% off on your first order.</p>
+          <p className="font-medium text-sm text-gray-600 mb-6">
+            Sign up and get 10% off on your first order.
+          </p>
           {/* Newsletter Form  */}
           <form className="flex">
-            <input type="email" placeholder="Enter your email" className=""/>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="p-3 w-full text-sm border-t border-l border-b border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-black text-white rounded-r-md text-sm px-6 py-3 mr-2 hover:bg-gray-800 transition-all"
+            >
+              Subscribe
+            </button>
           </form>
         </div>
+
+        {/* Shop links */}
+        <div>
+          <h3 className="text-lg text-gray-800 mb-4">Shop</h3>
+          <ul className="space-y-2 text-gray-600">
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Men's Top wear
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Women's Top wear
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Men's Bottom wear
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Women's Bottom wear
+              </Link>
+            </li>
+          </ul>
+        </div>
+        {/* Support Link */}
+        <div>
+          <h3 className="text-lg text-gray-800 mb-4">Support Link</h3>
+          <ul className="space-y-2 text-gray-600">
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Contact Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                FAQs
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="pb-1 border-b-2 border-transparent hover:border-primary transition duration-200"
+              >
+                Feartures
+              </Link>
+            </li>
+          </ul>
+        </div>
+        {/* Follow Us  */}
+        <div>
+          <h3 className="text-lg text-gray-800 mb-4">Follow Us</h3>
+          <div className="flex items-center space-x-4 mb-6">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+            >
+              <TbBrandMeta className="h-6 w-6" />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+            >
+              <IoLogoInstagram className="h-6 w-6" />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+            >
+              <RiTwitterXLine className="h-5 w-5" />
+            </a>
+          </div>
+          <p className="text-gray-800 text-lg mb-4">Call Us</p>
+          <p>
+            <FiPhoneCall className="inline-block mr-2" />
+            0123-456-789
+          </p>
+        </div>
+      </div>
+      {/* Footer Bottom */}
+      <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
+        <p className="text-gray-500 text-sm tracking-tighter text-center">
+          © 2025, All Rights Reserverd
+        </p>
       </div>
     </footer>
   );
