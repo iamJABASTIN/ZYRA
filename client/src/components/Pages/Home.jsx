@@ -2,7 +2,7 @@ import Hero from '../Layout/Hero'
 
 const Home = () => {
   return (
-    <div>
+    <div className="xl:padding-1 wide:padding-r padding-b">
       <Hero/>
     </div>
   )

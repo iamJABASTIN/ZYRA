@@ -4,7 +4,7 @@ import Header from "../Common/Header";
 
 const UserLayout = () => {
   return (
-    <>
+    <div className="relative">
       {/* Header */}
       <Header />
       {/* Main Content */}
@@ -13,7 +13,7 @@ const UserLayout = () => {
       </main>
       {/* Footer */}
       <Footer />
-    </>
+    </div>
   );
 };
 
