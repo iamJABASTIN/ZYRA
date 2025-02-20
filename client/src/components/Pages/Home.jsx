@@ -1,14 +1,14 @@
-import Hero from '../Layout/Hero'
-import GendersCollections from '../Products/GendersCollections'
-import NewArrivals from '../Products/NewArrivals'
+import Hero from "../Layout/Hero";
+import GendersCollections from "../Products/GendersCollections";
+import NewArrivals from "../Products/NewArrivals";
 const Home = () => {
   return (
     <div>
-      <Hero/>
-      <GendersCollections/>
-      <NewArrivals/>
+      <Hero />
+      <GendersCollections />
+      <NewArrivals />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

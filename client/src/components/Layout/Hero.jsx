@@ -1,5 +1,4 @@
-import heroImg from "../../assets/rabbit-hero.webp";
-import React from "react";
+import heroImg from "../../assets/rabbit-hero.jpg";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -14,7 +13,7 @@ const Hero = () => {
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/30"></div>
       {/* Centered Text Container */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-end justify-center">
         <div className="text-center text-white p-6">
           {/* Animated Heading with Bounce Effect */}
           <h1 className="text-4xl md:text-7xl lg:text-9xl font-bold tracking-tighter uppercase mb-4 animate-textEntrance">
