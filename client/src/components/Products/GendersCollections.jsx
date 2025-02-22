@@ -18,7 +18,7 @@ const GendersCollections = () => {
           {/* Text Content */}
           <div className="absolute bottom-8 left-8 p-4">
             <h2 className="text-2xl lg:text-4xl font-bold text-white mb-3 transition-colors duration-500 group-hover:text-gray-200">
-              Women's Collections
+              Women'€€s Collections
             </h2>
             <Link
               to="/collections/all?gender=Men"
