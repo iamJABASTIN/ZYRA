@@ -163,22 +163,20 @@ const NewArrivals = () => {
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className={`p-2 rounded border ${
-              canScrollLeft
-                ? " bg-[#ffffff] text-black "
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            }`}
+            className={`p-2 rounded border ${canScrollLeft
+              ? " bg-[#ffffff] text-black "
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              }`}
           >
             <FiChevronLeft className="text-2xl" />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            className={`p-2 rounded border ${
-              canScrollRight
-                ? " bg-[#ffffff] text-black "
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            }`}
+            className={`p-2 rounded border ${canScrollRight
+              ? " bg-[#ffffff] text-black "
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              }`}
           >
             <FiChevronRight className="text-2xl" />
           </button>
@@ -188,9 +186,8 @@ const NewArrivals = () => {
       {/* Scrollable Content */}
       <div
         ref={scrollRef}
-        className={`container mx-auto overflow-x-scroll flex space-x-6 relative ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
+        className={`container mx-auto overflow-x-auto flex space-x-6 relative snap-x snap-mandatory ${isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
@@ -199,18 +196,22 @@ const NewArrivals = () => {
         {newArrivals.map((product) => (
           <div
             key={product._id}
-            className="min-w-[100%] sm:min-w-[50%] lg:min-w-[30%] relative"
+            className="min-w-[90%] sm:min-w-[45%] lg:min-w-[30%] relative snap-center transition duration-300 hover:-translate-y-2 mt-6"
           >
-            <img
-              src={product.images[0]?.URL}
-              alt={product.images[0]?.altText || product.name}
-              className="w-full h-[450px] objective-cover rounded-lg"
-              draggable={false}
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-opacity-50 backdrop-blur-md text-[#ffffff] p-4 rounded-b-lg">
+            <div className="relative">
+              <img
+                src={product.images[0]?.URL}
+                alt={product.images[0]?.altText || product.name}
+                className="w-full h-[450px] object-cover rounded-lg shadow-lg transition duration-300 hover:brightness-110"
+                draggable={false}
+              />
+              {/* Gradient overlay for improved text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-50 rounded-lg"></div>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-4">
               <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-medium">{product.name}</h4>
-                <p className="mt-1">Rs {product.price}</p>
+                <h4 className="font-bold text-white text-xl drop-shadow-lg">{product.name}</h4>
+                <p className="mt-1 text-lg text-white drop-shadow-lg">Rs {product.price}</p>
               </Link>
             </div>
           </div>

@@ -16,7 +16,7 @@ export default {
         },
       },
       animation: {
-        kenBurns: 'kenBurns 20s ease-in-out infinite',
+        kenBurns: 'kenBurns 15s ease-in-out infinite',
         textEntrance: 'textEntrance 1.5s ease forwards',
       },
       colors: {
