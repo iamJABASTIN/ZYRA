@@ -131,13 +131,6 @@ const NewArrivals = () => {
       setCanScrollLeft(leftScroll > 0);
       setCanScrollRight(rightScrollable);
     }
-
-    console.log({
-      scrollLeft: container.scrollLeft,
-      clientWidth: container.clientWidth,
-      containerScrollWidth: container.scrollWidth,
-      offsetLeft: scrollRef.current.offsetLeft,
-    });
   };
 
   useEffect(() => {
@@ -200,7 +193,7 @@ const NewArrivals = () => {
           >
             <div className="relative">
               <img
-                src={product.images[0]?.URL}
+                src={product.images[0]?.URL || "https://via.placeholder.com/500"}
                 alt={product.images[0]?.altText || product.name}
                 className="w-full h-[450px] object-cover rounded-lg shadow-lg transition duration-300 hover:brightness-110"
                 draggable={false}
