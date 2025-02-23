@@ -5,6 +5,7 @@ import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register";
 import Profile from "./components/Pages/Profile";
+import CollectionPage from "./components/Pages/CollectionPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="login" element={<Login />}/>
           <Route path="register" element={<Register />}/>
           <Route path="profile" element={<Profile />}/>
+          <Route path="collections/:collection" element={<CollectionPage />}/>
         </Route>
         <Route>{/*Admin Layout*/}</Route>
       </Routes>
