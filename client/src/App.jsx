@@ -4,6 +4,7 @@ import UserLayout from "./components/Layout/UserLayout";
 import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register";
+import Profile from "./components/Pages/Profile";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           {/* Login Route */}
           <Route path="login" element={<Login />}/>
           <Route path="register" element={<Register />}/>
+          <Route path="profile" element={<Profile />}/>
         </Route>
         <Route>{/*Admin Layout*/}</Route>
       </Routes>
