@@ -9,6 +9,8 @@ import CollectionPage from "./components/Pages/CollectionPage";
 import ProductDetails from "./components/Products/ProductDetails";
 import Checkout from "./components/Cart/Checkout";
 import OrderConfirmatioPage from "./components/Pages/OrderConfirmatioPage";
+import OrderDetailsPage from "./components/Pages/OrderDetailsPage";
+import MyOrdersPage from "./components/Pages/MyOrdersPage";
 
 const App = () => {
   return (
@@ -16,9 +18,7 @@ const App = () => {
       <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<UserLayout />}>
-          {/*User Layout*/}
-          <Route index element={<Home />}></Route>
-          {/* Login Route */}
+          <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="profile" element={<Profile />} />
@@ -26,6 +26,8 @@ const App = () => {
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="order-confirmation" element={<OrderConfirmatioPage />} />
+          <Route path="order/:id" element={<OrderDetailsPage />} />
+          <Route path="my-orders" element={<MyOrdersPage />} />
         </Route>
         <Route>{/*Admin Layout*/}</Route>
       </Routes>
