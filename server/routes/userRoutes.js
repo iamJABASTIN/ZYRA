@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const { protect } = require("../middleware/authMiddleware");
 
 // @route POST /api/users/register
 // @desc Register a new user
@@ -90,6 +91,14 @@ router.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).send("Server Error");
   }
+});
+
+// @route GET /api/users/profile
+// @desc Get logged-in user's profile (Protected Route)
+// @access Private
+
+router.get("/profile", protect, async (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
