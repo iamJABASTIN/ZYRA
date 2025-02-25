@@ -51,7 +51,7 @@ const EditProductPage = () => {
             name="name"
             value={productData.name}
             onChange={handleChange}
-            className="w-full border border-gray-500 rounded-md p-2"
+            className="w-full border border-gray-300 rounded-md p-2"
             required
           />
         </div>
@@ -62,7 +62,7 @@ const EditProductPage = () => {
             name="description"
             value={productData.description}
             onChange={handleChange}
-            className="w-full border border-gray-500 rounded-md p-2"
+            className="w-full border border-gray-300 rounded-md p-2"
             rows={4}
             required
           ></textarea>
