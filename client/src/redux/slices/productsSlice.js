@@ -76,7 +76,7 @@ export const fetchSimilarProducts = createAsyncThunk(
   "products/fetchSimilarProducts",
   async ({ id }) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/products/similar?${id}`
+      `${import.meta.env.VITE_BACKEND_URL}/api/products/similar/${id}`
     );
     return response.data;
   }
@@ -86,7 +86,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
-    selectedProduct: null, //Store the details of the single Product
+    selectedProduct: null,
     similarProducts: [],
     loading: false,
     error: null,
@@ -126,7 +126,7 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // handle featching products with filter
+      // Handle fetching products with filters
       .addCase(fetchProductsByFilters.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -152,7 +152,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      // Handle Updating product
+      // Handle updating product
       .addCase(updateProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -161,13 +161,26 @@ const productsSlice = createSlice({
         state.loading = false;
         const updatedProduct = action.payload;
         const index = state.products.findIndex(
-          (product) => product._id === updateProduct._id
+          (product) => product._id === updatedProduct._id
         );
         if (index !== -1) {
           state.products[index] = updatedProduct;
         }
       })
       .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // Handle fetching similar products
+      .addCase(fetchSimilarProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.similarProducts = action.payload;
+      })
+      .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

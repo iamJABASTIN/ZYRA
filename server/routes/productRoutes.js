@@ -251,17 +251,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-// @route GET /api/products/best-seller
-// @desc Retrive the product with highest rating
-// @access Public
+// SPECIAL ROUTES SECTION - These must come BEFORE /:id route
 
+// @route GET /api/products/best-seller
+// @desc Retrieve the product with highest rating
+// @access Public
 router.get("/best-seller", async (req, res) => {
   try {
-    const bestSeller = await Product.find().sort({ rating: -1 });
-    if (bestSeller) {
-      res.json(bestSeller);
+    const bestSellers = await Product.find().sort({ rating: -1 }).limit(8);
+
+    if (bestSellers.length > 0) {
+      res.json(bestSellers);
     } else {
-      res.status(404).json({ message: "No best seller found" });
+      res.status(404).json({ message: "No best sellers found" });
     }
   } catch (error) {
     console.error(error);
@@ -270,9 +272,8 @@ router.get("/best-seller", async (req, res) => {
 });
 
 // @route GET /api/products/new-arrivals
-// @desc Retrive latest 8 products - Creation data
+// @desc Retrieve latest 8 products - Creation date
 // @access Public
-
 router.get("/new-arrivals", async (req, res) => {
   try {
     //Fetch latest 8 products
@@ -284,29 +285,9 @@ router.get("/new-arrivals", async (req, res) => {
   }
 });
 
-// @route GET /api/products/:id
-// @desc Get a Single product by ID
-// @access Public
-
-router.get("/:id", async (req, res) => {
-  try {
-    // Find the product by ID
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ message: "Product not found" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server Error");
-  }
-});
-
 // @route GET /api/products/similar/:id
-// @desc Retrive similar products based on the current product's gender and category
+// @desc Retrieve similar products based on the current product's gender and category
 // @access Public
-
 router.get("/similar/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -324,6 +305,25 @@ router.get("/similar/:id", async (req, res) => {
     }).limit(4);
 
     res.json(similarProducts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// GENERIC ID ROUTE - This must come LAST
+// @route GET /api/products/:id
+// @desc Get a Single product by ID
+// @access Public
+router.get("/:id", async (req, res) => {
+  try {
+    // Find the product by ID
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");

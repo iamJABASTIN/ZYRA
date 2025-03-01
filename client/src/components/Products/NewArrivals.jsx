@@ -1,105 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import axios from "axios"
 
 const NewArrivals = () => {
   const scrollRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(true);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const newArrivals = [
-    {
-      _id: "1",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=1",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "2",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=2",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "3",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=3",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "4",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=4",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "5",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=5",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "6",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=6",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "7",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=7",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "8",
-      name: "Stylish Jacket",
-      price: 600,
-      images: [
-        {
-          URL: "https://picsum.photos/500/500?random=8",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-  ];
+  const [newArrivals, setNewArrivals] = useState([]);
+  useEffect( () => {
+    const fetchNewArrivals = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`)
+        setNewArrivals(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNewArrivals();
+  }, [])
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -140,7 +63,7 @@ const NewArrivals = () => {
       updateScrollButtons();
       return () => container.removeEventListener("scroll", updateScrollButtons);
     }
-  }, []);
+  }, [newArrivals]);
 
   return (
     <section className="py-16 px-4 lg:px-0">
@@ -156,20 +79,22 @@ const NewArrivals = () => {
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className={`p-2 rounded border ${canScrollLeft
-              ? " bg-[#ffffff] text-black "
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
-              }`}
+            className={`p-2 rounded border ${
+              canScrollLeft
+                ? " bg-[#ffffff] text-black "
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
           >
             <FiChevronLeft className="text-2xl" />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            className={`p-2 rounded border ${canScrollRight
-              ? " bg-[#ffffff] text-black "
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
-              }`}
+            className={`p-2 rounded border ${
+              canScrollRight
+                ? " bg-[#ffffff] text-black "
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
           >
             <FiChevronRight className="text-2xl" />
           </button>
@@ -179,8 +104,9 @@ const NewArrivals = () => {
       {/* Scrollable Content */}
       <div
         ref={scrollRef}
-        className={`container mx-auto overflow-x-auto flex space-x-6 relative snap-x snap-mandatory ${isDragging ? "cursor-grabbing" : "cursor-grab"
-          }`}
+        className={`container mx-auto overflow-x-auto flex space-x-6 relative snap-x snap-mandatory ${
+          isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
@@ -193,7 +119,9 @@ const NewArrivals = () => {
           >
             <div className="relative">
               <img
-                src={product.images[0]?.URL || "https://via.placeholder.com/500"}
+                src={
+                  product.images[0]?.url || "https://via.placeholder.com/500"
+                }
                 alt={product.images[0]?.altText || product.name}
                 className="w-full h-[450px] object-cover rounded-lg shadow-lg transition duration-300 hover:brightness-110"
                 draggable={false}
@@ -203,8 +131,12 @@ const NewArrivals = () => {
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-4">
               <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-bold text-white text-xl drop-shadow-lg">{product.name}</h4>
-                <p className="mt-1 text-lg text-white drop-shadow-lg">Rs {product.price}</p>
+                <h4 className="font-bold text-white text-xl drop-shadow-lg">
+                  {product.name}
+                </h4>
+                <p className="mt-1 text-lg text-white drop-shadow-lg">
+                  Rs {product.price}
+                </p>
               </Link>
             </div>
           </div>
