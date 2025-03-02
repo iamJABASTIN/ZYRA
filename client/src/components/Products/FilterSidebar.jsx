@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import debounce from "lodash/debounce";
 
 const FilterSidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,13 +14,12 @@ const FilterSidebar = () => {
     material: [],
     brand: [],
     minPrice: 0,
-    maxPrice: 1000,
+    maxPrice: 5000,
   });
 
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 5000]);
 
   const categories = ["Top Wear", "Bottom Wear"];
-
   const colors = [
     "Red",
     "Blue",
@@ -32,11 +32,9 @@ const FilterSidebar = () => {
     "Beige",
     "Navy",
   ];
-
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
   const materials = [
-    "Cotten",
+    "Cotton",
     "Wool",
     "Denim",
     "Polyester",
@@ -45,7 +43,6 @@ const FilterSidebar = () => {
     "Viscose",
     "Fleece",
   ];
-
   const brands = [
     "Urban Threads",
     "Modern Fit",
@@ -54,12 +51,10 @@ const FilterSidebar = () => {
     "Fashionsta",
     "ChicStyle",
   ];
-
   const genders = ["Men", "Women"];
 
   useEffect(() => {
     const params = Object.fromEntries([...searchParams]);
-
     setFilters({
       category: params.category || "",
       gender: params.gender || "",
@@ -67,11 +62,13 @@ const FilterSidebar = () => {
       size: params.size ? params.size.split(",") : [],
       material: params.material ? params.material.split(",") : [],
       brand: params.brand ? params.brand.split(",") : [],
-      minPrice: params.minPrice || 0,
-      maxPrice: params.maxPrice || 1000,
+      minPrice: Number(params.minPrice) || 0,
+      maxPrice: Number(params.maxPrice) || 5000,
     });
-
-    setPriceRange([0, params.maxPrice || 1000]);
+    setPriceRange([
+      Number(params.minPrice) || 0,
+      Number(params.maxPrice) || 5000,
+    ]);
   }, [searchParams]);
 
   const handleFilterChange = (e) => {
@@ -105,17 +102,39 @@ const FilterSidebar = () => {
     navigate(`?${params.toString()}`);
   };
 
+  // Define the debounced function to update filters and URL
+  const debouncedPriceUpdate = useCallback(
+    debounce((newMaxPrice) => {
+      setFilters((prevFilters) => {
+        const newFilters = {
+          ...prevFilters,
+          minPrice: 0,
+          maxPrice: newMaxPrice,
+        };
+        updateURLParams(newFilters);
+        return newFilters;
+      });
+    }, 300),
+    []
+  );
+
+  // Handle slider changes
   const handlePriceChange = (e) => {
-    const newPrice = e.target.value
-    setPriceRange([0,newPrice])
-    const newFilters = { ...filters, minPrice:0, maxPrice: newPrice}
-    setFilters(filters)
-    updateURLParams(newFilters);
-  }
+    const newMaxPrice = Number(e.target.value);
+    setPriceRange([0, newMaxPrice]); // Update UI immediately
+    debouncedPriceUpdate(newMaxPrice); // Debounce filter and URL updates
+  };
+
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      debouncedPriceUpdate.cancel();
+    };
+  }, [debouncedPriceUpdate]);
 
   return (
     <div className="p-4">
-      <h3 className="text-xl font-medium ext-gray-800 mb-4">Filter</h3>
+      <h3 className="text-xl font-medium text-gray-800 mb-4">Filter</h3>
       {/* Category Filter */}
       <div className="mb-6">
         <label className="block text-gray-600 font-medium mb-2">Category</label>
@@ -234,13 +253,13 @@ const FilterSidebar = () => {
           type="range"
           name="pricerange"
           min={0}
-          max={1000}
+          max={5000}
           value={priceRange[1]}
           onChange={handlePriceChange}
           className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
         />
         <div className="flex justify-between text-gray-600 mt-2">
-          <span>Rs 0</span>
+          <span>Rs {priceRange[0]}</span>
           <span>Rs {priceRange[1]}</span>
         </div>
       </div>
