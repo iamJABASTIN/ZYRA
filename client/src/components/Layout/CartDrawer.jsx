@@ -16,7 +16,6 @@ const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
     } else {
       navigate("/checkout");
     }
-    navigate("/checkout");
   };
 
   return (
