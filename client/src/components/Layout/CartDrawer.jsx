@@ -1,14 +1,23 @@
 import { IoMdClose } from "react-icons/io";
 import CartContents from "../Cart/CartContents";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
+  const navigate = useNavigate();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+  const userId = user ? user._id : null;
 
-  const navigate = useNavigate()
   const handleCheckout = () => {
-    toggleCartDrawer()
-      navigate("/checkout")
-  }
+    toggleCartDrawer();
+    if (!user) {
+      navigate("/login?redirect=checkout");
+    } else {
+      navigate("/checkout");
+    }
+    navigate("/checkout");
+  };
 
   return (
     <div
@@ -26,17 +35,28 @@ const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
       <div className="flex-grow p-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
         {/* component of cart content */}
-        <CartContents />
+        {cart && cart?.products?.length > 0 ? (
+          <CartContents cart={cart} userId={userId} guestId={guestId} />
+        ) : (
+          <p>Your Cart is empty</p>
+        )}
       </div>
 
       {/* Check out button fixed at bottom */}
       <div className="p-4 bg-[#FFFFFF] sticky bottom-0 ">
-        <button onClick={handleCheckout} className="px-3 py-2 w-full outline-none focus:outline-none bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition">
-          Checkout
-        </button>
-        <p className="text-gray-500 text-center text-sm tracking-tighter mt-2">
-          Shipping, taxes, and discount calculated at checkout.
-        </p>
+        {cart && cart?.products?.length > 0 && (
+          <>
+            <button
+              onClick={handleCheckout}
+              className="px-3 py-2 w-full outline-none focus:outline-none bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition"
+            >
+              Checkout
+            </button>
+            <p className="text-gray-500 text-center text-sm tracking-tighter mt-2">
+              Shipping, taxes, and discount calculated at checkout.
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

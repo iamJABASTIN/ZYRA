@@ -21,7 +21,7 @@ const GendersCollections = () => {
               Women's Collections
             </h2>
             <Link
-              to="/collections/all?gender=Men"
+              to="/collections/all?gender=Women"
               className="text-black px-4 py-2 rounded-md bg-white transition-colors duration-500"
             >
               Shop Now

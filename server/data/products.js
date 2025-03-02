@@ -122,7 +122,7 @@ const products = [
         altText: "Slim-Fit Stretch Shirt Back View",
       },
     ],
-    rating: 4.8,
+    rating: 5,
     numReviews: 15,
   },
   {
