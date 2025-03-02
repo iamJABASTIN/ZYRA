@@ -25,3 +25,6 @@ const PayPalButton = ({amount, onSuccess, onError}) => {
 };
 
 export default PayPalButton;
+
+// sb-jnl8v37924963@personal.example.com
+// NO?vy8D)
