@@ -33,8 +33,8 @@ const Navbar = () => {
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* {Left Logo} */}
         <div>
-          <Link to="/" className="text-2xl font-medium">
-            ZYRA
+          <Link to="/" className="text-2xl font-medium ">
+            <img src="/ZYRA.ico" alt="Logo" className="h-8 w-8 inline "/>YRA
           </Link>
         </div>
 
